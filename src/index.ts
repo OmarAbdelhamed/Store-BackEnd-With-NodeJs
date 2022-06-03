@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import Ratelimit from 'express-rate-limit';
 import errorMiddleware from './middleware/error.middleware';
 import config from './config';
-import db from './Database';
+import routes from './routes';
 
 const app: Application = express();
 const port = config.port || 3000;
@@ -26,38 +26,19 @@ app.use(
   })
 );
 
+app.use('/api', routes);
+
 app.get('/', (req, res) => {
-  throw new Error('Error exist');
   res.send('hello world');
 });
 
-app.post('/', (req: Request, res: Response) => {
-  res.json({
-    message: 'hello World from post',
-    data: req.body,
-  });
-});
-
-db.connect().then((client) => {
-  return client
-    .query('SELECT NOW()')
-    .then((res) => {
-      client.release();
-      console.log(res.rows);
-    })
-    .catch((err) => {
-      client.release();
-      console.log(err.stack);
-    });
-});
+app.use(errorMiddleware);
 
 app.use((_req: Request, res: Response) => {
   res.status(404).json({
     message: 'ohh you are lost go back to mama',
   });
 });
-
-app.use(errorMiddleware);
 
 app.listen(port, () => {
   console.log(`server is on localhost:${port}`);
