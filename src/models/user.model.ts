@@ -1,5 +1,13 @@
 import User from '../types/user.type';
+import bcrypt from 'bcrypt';
 import db from '../Database';
+import config from '../config';
+
+const hashPassword = (password: string) => {
+  const salt = parseInt(config.salt as string, 5);
+  return bcrypt.hashSync(`${password} ${config.pepper}`, salt);
+};
+
 class UserModel {
   // create
   async create(u: User): Promise<User> {
@@ -12,7 +20,7 @@ class UserModel {
         u.user_name,
         u.first_name,
         u.last_name,
-        u.password,
+        hashPassword(u.password),
       ]);
 
       connection.release();
@@ -66,7 +74,7 @@ class UserModel {
         u.user_name,
         u.first_name,
         u.last_name,
-        u.password,
+        hashPassword(u.password),
         u.id,
       ]);
 
