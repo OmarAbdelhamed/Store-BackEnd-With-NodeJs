@@ -4,8 +4,8 @@ import db from '../Database';
 import config from '../config';
 
 const hashPassword = (password: string) => {
-  const salt = parseInt(config.salt as string, 5);
-  return bcrypt.hashSync(`${password} ${config.pepper}`, salt);
+  const salt = parseInt(config.salt as string, 10);
+  return bcrypt.hashSync(`${password}${config.pepper}`, salt);
 };
 
 class UserModel {
@@ -105,6 +105,38 @@ class UserModel {
     }
   }
   // authenticate user
+  async authenticate(email: string, password: string): Promise<User | null> {
+    try {
+      const connection = await db.connect();
+      const sql = 'SELECT password FROM users WHERE email=$1';
+      const result = await connection.query(sql, [email]);
+      if (result.rows.length) {
+        const { password: hashPassword } = result.rows[0];
+        console.log(password);
+        console.log(hashPassword);
+
+        const isPasswordValid = bcrypt.compareSync(
+          `${password}${config.pepper}`,
+          hashPassword
+        );
+        console.log(isPasswordValid);
+
+        if (isPasswordValid) {
+          const userInfo = await connection.query(
+            'SELECT id, email, user_name, first_name, last_name FROM users WHERE email=($1)',
+            [email]
+          );
+          console.log(userInfo.rows[0]);
+
+          return userInfo.rows[0];
+        }
+      }
+      connection.release();
+      return null;
+    } catch (error) {
+      throw new Error(`unable to login: ${(error as Error).message}`);
+    }
+  }
 }
 
 export default UserModel;
