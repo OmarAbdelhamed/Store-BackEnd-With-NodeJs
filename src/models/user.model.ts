@@ -110,17 +110,14 @@ class UserModel {
       const connection = await db.connect();
       const sql = 'SELECT password FROM users WHERE email=$1';
       const result = await connection.query(sql, [email]);
+
       if (result.rows.length) {
         const { password: hashPassword } = result.rows[0];
-        console.log(password);
-        console.log(hashPassword);
 
         const isPasswordValid = bcrypt.compareSync(
           `${password}${config.pepper}`,
           hashPassword
         );
-        console.log(isPasswordValid);
-
         if (isPasswordValid) {
           const userInfo = await connection.query(
             'SELECT id, email, user_name, first_name, last_name FROM users WHERE email=($1)',
