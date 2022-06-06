@@ -1,4 +1,4 @@
-import db from '../../database';
+import db from '../../Database';
 import User from '../../types/user.type';
 import Product from '../../types/product.type';
 import Order from '../../types/order.type';
@@ -35,19 +35,19 @@ describe('Order Model', () => {
       userName: 'testUser',
       firstName: 'Test',
       lastName: 'User',
-      password: 'test123'
-    } as User;
+      password: 'test123',
+    } as unknown as User;
 
     const product = {
       name: 'product name',
       description: 'product description',
       price: 20,
-      category: 'Electronics.'
+      category: 'Electronics.',
     } as Product;
 
     const order = {
       userId: 1,
-      status: 'active'
+      status: 'active',
     } as Order;
 
     beforeAll(async () => {
@@ -83,7 +83,7 @@ describe('Order Model', () => {
       const returnedOrder = await orderModel.edit({
         id: 1,
         userId: 1,
-        status: 'completed'
+        status: 'completed',
       });
       expect(returnedOrder.status).toBe('completed');
     });

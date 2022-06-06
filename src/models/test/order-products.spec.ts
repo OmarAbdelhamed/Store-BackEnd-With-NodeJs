@@ -1,4 +1,4 @@
-import db from '../../database';
+import db from '../../Database';
 import User from '../../types/user.type';
 import Product from '../../types/product.type';
 import Order from '../../types/order.type';
@@ -38,25 +38,25 @@ describe('Order Product Model', () => {
       userName: 'testUser',
       firstName: 'Test',
       lastName: 'User',
-      password: 'test123'
-    } as User;
+      password: 'test123',
+    } as unknown as User;
 
     const product = {
       name: 'product name',
       description: 'product description',
       price: 9.99,
-      category: 'Electronics.'
+      category: 'Electronics.',
     } as Product;
 
     const order = {
       userId: 1,
-      status: 'active'
+      status: 'active',
     } as Order;
 
     const orderProduct = {
       quantity: 1,
       orderId: 1,
-      productId: 1
+      productId: 1,
     } as OrderProduct;
 
     beforeAll(async () => {
@@ -94,7 +94,7 @@ describe('Order Product Model', () => {
         id: 1,
         quantity: 10,
         orderId: 1,
-        productId: 1
+        productId: 1,
       });
       expect(editOrderProduct.quantity).toEqual(10);
     });

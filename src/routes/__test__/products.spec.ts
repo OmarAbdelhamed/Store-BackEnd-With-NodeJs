@@ -1,12 +1,12 @@
 import supertest from 'supertest';
-import db from '../../database';
-import app from '../../app';
+import db from '../../Database';
+import app from '../../index';
 import UserModel from '../../models/user.model';
 import User from '../../types/user.type';
 
 const userModel = new UserModel();
 const request = supertest(app);
-let token: string = '';
+let token = '';
 
 describe('Products API Endpoints', () => {
   beforeAll(async () => {
@@ -15,8 +15,8 @@ describe('Products API Endpoints', () => {
       userName: 'testUser',
       firstName: 'Test',
       lastName: 'User',
-      password: 'test123'
-    } as User;
+      password: 'test123',
+    } as unknown as User;
 
     await userModel.create(user);
   });
@@ -35,7 +35,7 @@ describe('Products API Endpoints', () => {
         .set('Content-type', 'application/json')
         .send({
           userName: 'testUser',
-          password: 'test123'
+          password: 'test123',
         });
       expect(res.status).toBe(200);
       const { id, email, token: userToken } = res.body.data;
@@ -55,7 +55,7 @@ describe('Products API Endpoints', () => {
           name: 'product name',
           description: 'product description',
           price: 9.99,
-          category: 'Electronics.'
+          category: 'Electronics.',
         });
       expect(res.status).toBe(200);
       const { id, name, description, price, category } = res.body.data;
@@ -94,7 +94,7 @@ describe('Products API Endpoints', () => {
           name: 'product name',
           description: 'product description',
           price: 20,
-          category: 'Electronics.'
+          category: 'Electronics.',
         });
 
       const { id, name, description, price, category } = res.body.data.product;

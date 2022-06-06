@@ -1,6 +1,6 @@
 import supertest from 'supertest';
-import db from '../../database';
-import app from '../../app';
+import db from '../../Database';
+import app from '../../index';
 import UserModel from '../../models/user.model';
 import User from '../../types/user.type';
 import OrderProduct from '../../types/order-product.type';
@@ -13,7 +13,7 @@ const userModel = new UserModel();
 const productModel = new ProductModel();
 const orderModel = new OrderModel();
 const request = supertest(app);
-let token: string = '';
+let token = '';
 
 describe('Order Product API Endpoints', () => {
   const user = {
@@ -21,25 +21,25 @@ describe('Order Product API Endpoints', () => {
     userName: 'testUser',
     firstName: 'Test',
     lastName: 'User',
-    password: 'test123'
-  } as User;
+    password: 'test123',
+  } as unknown as User;
 
   const product = {
     name: 'product name',
     description: 'product description',
     price: 9.99,
-    category: 'Electronics.'
+    category: 'Electronics.',
   } as Product;
 
   const order = {
     userId: 1,
-    status: 'active'
+    status: 'active',
   } as Order;
 
   const orderProduct = {
     quantity: 1,
     orderId: 1,
-    productId: 1
+    productId: 1,
   } as OrderProduct;
 
   beforeAll(async () => {
@@ -64,7 +64,7 @@ describe('Order Product API Endpoints', () => {
         .set('Content-type', 'application/json')
         .send({
           userName: 'testUser',
-          password: 'test123'
+          password: 'test123',
         });
       expect(res.status).toBe(200);
       const { id, email, token: userToken } = res.body.data;
@@ -115,7 +115,7 @@ describe('Order Product API Endpoints', () => {
           id: 1,
           productId: 1,
           orderId: 1,
-          quantity: 2
+          quantity: 2,
         });
       const { id, productId, orderId, quantity } = res.body.data.orderProduct;
 
@@ -133,7 +133,7 @@ describe('Order Product API Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({
           productId: 1,
-          orderId: 1
+          orderId: 1,
         });
       expect(res.status).toBe(200);
       expect(res.body.data.orderProduct.id).toBe(1);

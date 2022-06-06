@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import db from '../database';
+import db from '../Database';
 import Product from '../types/product.type';
 
 class ProductModel {
@@ -15,7 +15,7 @@ class ProductModel {
       name: product.name,
       description: product.description,
       price: +product.price,
-      category: product.category
+      category: product.category,
     };
   }
 
@@ -25,13 +25,18 @@ class ProductModel {
       const sql =
         'INSERT INTO  products (name, description, price, category) values ($1, $2, $3, $4) RETURNING *';
 
-      const result = await connection.query(sql, [p.name, p.description, p.price, p.category]);
+      const result = await connection.query(sql, [
+        p.name,
+        p.description,
+        p.price,
+        p.category,
+      ]);
 
       connection.release();
 
       return this.formatProduct(result.rows[0]);
     } catch (err) {
-      throw new Error(`Could not create product ${err.message}`);
+      throw new Error(`Could not create product ${(err as Error).message}`);
     }
   }
 
@@ -43,7 +48,7 @@ class ProductModel {
       connection.release();
       return result.rows.map((p) => this.formatProduct(p));
     } catch (err) {
-      throw new Error(`Error at retrieving products ${err.message}`);
+      throw new Error(`Error at retrieving products ${(err as Error).message}`);
     }
   }
 
@@ -57,12 +62,14 @@ class ProductModel {
         p.description,
         p.price,
         p.category,
-        p.id
+        p.id,
       ]);
       connection.release();
       return this.formatProduct(result.rows[0]);
     } catch (err) {
-      throw new Error(`Could not update product ${p.name}, ${err.message}`);
+      throw new Error(
+        `Could not update product ${p.name}, ${(err as Error).message}`
+      );
     }
   }
 
@@ -77,7 +84,9 @@ class ProductModel {
 
       return this.formatProduct(result.rows[0]);
     } catch (err) {
-      throw new Error(`Could not delete product ${id}. ${err.message}`);
+      throw new Error(
+        `Could not delete product ${id}. ${(err as Error).message}`
+      );
     }
   }
 
@@ -92,7 +101,9 @@ class ProductModel {
       connection.release();
       return this.formatProduct(result.rows[0]);
     } catch (err) {
-      throw new Error(`Could not find product ${id}. ${err.message}`);
+      throw new Error(
+        `Could not find product ${id}. ${(err as Error).message}`
+      );
     }
   }
 }

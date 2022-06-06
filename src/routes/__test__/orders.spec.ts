@@ -1,12 +1,12 @@
 import supertest from 'supertest';
-import db from '../../database';
-import app from '../../app';
+import db from '../../Database';
+import app from '../../index';
 import UserModel from '../../models/user.model';
 import User from '../../types/user.type';
 
 const userModel = new UserModel();
 const request = supertest(app);
-let token: string = '';
+let token = '';
 
 describe('Orders API Endpoints', () => {
   beforeAll(async () => {
@@ -15,8 +15,8 @@ describe('Orders API Endpoints', () => {
       userName: 'testUser',
       firstName: 'Test',
       lastName: 'User',
-      password: 'test123'
-    } as User;
+      password: 'test123',
+    } as unknown as User;
 
     await userModel.create(user);
   });
@@ -37,7 +37,7 @@ describe('Orders API Endpoints', () => {
         .set('Content-type', 'application/json')
         .send({
           userName: 'testUser',
-          password: 'test123'
+          password: 'test123',
         });
       expect(res.status).toBe(200);
       const { id, email, token: userToken } = res.body.data;
@@ -55,7 +55,7 @@ describe('Orders API Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({
           userId: 1,
-          status: 'active'
+          status: 'active',
         });
       expect(res.status).toBe(200);
       const { id, status, userId } = res.body.data;
@@ -108,7 +108,7 @@ describe('Orders API Endpoints', () => {
         .send({
           id: 1,
           userId: 1,
-          status: 'active'
+          status: 'active',
         });
 
       const { id, status, userId } = res.body.data.order;

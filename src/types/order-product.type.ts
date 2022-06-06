@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import Product from './product.type';
 
 type OrderProduct = {

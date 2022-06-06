@@ -10,7 +10,6 @@ ___Table of Contents___
   - [Running the application](#running-the-application)
   - [Running the unit tests](#running-the-unit-tests)
   - [Built With](#built-with)
-  - [Authors](#authors)
   - [License](#license)
   - [Acknowledgments](#acknowledgments)
   - [Endpoints](#endpoints)
@@ -127,27 +126,9 @@ You may also use the Postman collection present in the repository for testing.
 - [TypeScript](https://www.typescriptlang.org/) - Types JS extension
 - [Jasmine](https://jasmine.github.io/) - The unit testing framework
 
-## Authors
-
-```javascript
-
-const life: MZanatyLife = {
-  greet: "Hi 👋, I'm Mohammed Elzanaty, working as ND Frontend Lead @udacity & Senior SE @ Vodafone",
-  bio: 'A passionate teaching-lover, developer, writer, and autodidact. from Egypt',
-  currentlyLearning: 'Cloud [AWS, GCP]',
-  askMeAbout: 'Frontend Technologies',
-  reachMeAt: 'mohammedelzanaty129@gmail.com',
-  funFact: 'I learned programming by chance 😭',
-};
-```
-
-[![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mohammedelzanaty129/)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=flat&logo=twitter&logoColor=white)](https://twitter.com/mohammdelzanaty)
-
 ## License
 
-This project is licensed under the ISC License - see the [LICENSE.txt](LICENSE.txt) file for details
-
+all CopyRights ...
 ## Acknowledgments
 
 * The official documentation of `db-migrate`

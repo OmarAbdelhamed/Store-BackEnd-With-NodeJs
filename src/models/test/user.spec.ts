@@ -84,20 +84,6 @@ describe('User Model', () => {
       expect(returnedUser.last_name).toBe(user.last_name);
     });
 
-    it('Update One method should return a user with edited attributes', async () => {
-      const updatedUser = await userModel.updateOne({
-        ...user,
-        user_name: 'testUser Updated',
-        first_name: 'Mohammed',
-        last_name: 'Elzanaty',
-      });
-      expect(updatedUser.email).toBe(user.email);
-      expect(updatedUser.user_name).toBe('testUser Updated');
-      expect(updatedUser.first_name).toBe('Mohammed');
-      expect(updatedUser.last_name).toBe('Elzanaty');
-      expect(updatedUser.id).toBe(user.id);
-    });
-
     it('Delete One method should delete user from DB', async () => {
       const deletedUser = await userModel.deleteOne(user.id as string);
       expect(deletedUser.id).toBe(user.id);

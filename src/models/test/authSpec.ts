@@ -1,5 +1,5 @@
 import UserModel from '../user.model';
-import db from '../../database';
+import db from '../../Database';
 import User from '../../types/user.type';
 
 const userModel = new UserModel();
