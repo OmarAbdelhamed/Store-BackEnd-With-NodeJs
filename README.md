@@ -47,16 +47,15 @@ First, create a `.env` file with all the required environment variables:
 
 ```bash
 # .env
-NODE_ENV=development
 PORT=3000
-# Set your database connection information here
-DB_HOST=localhost
-DB_PORT=5432
-DB_DATABASE=database_dev
-DB_DATABASE_TEST=database_test
-DB_USER=databaseuser
-DB_PASS=password
-# user
+NODE_ENV=dev
+
+PGHOST='localhost'
+PGPORT=5432
+PGDATABASE=store
+PGDATABASE_TEST=store_test
+PGUSER= databaseUser
+PGPASSWORD= databasePassword
 BCRYPT_PASSWORD=your-secret-password
 SALT_ROUNDS=10
 TOKEN_SECRET=your-secret-token
